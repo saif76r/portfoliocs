@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-cyber-green: #00ff41;
+  --color-cyber-black: #05070a;
+  --color-cyber-dark: #0d1117;
+  --color-cyber-border: #30363d;
+  --color-cyber-dim: #8b949e;
+  --color-cyber-text: #e6edf3;
+}
+
+@layer base {
+  body {
+    @apply bg-cyber-black text-cyber-dim font-sans antialiased;
+  }
+  
+  h1, h2, h3, h4 {
+    @apply text-cyber-text font-semibold;
+  }
+
+  /* Custom Scrollbar for the Bento hack feel */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-cyber-black;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-cyber-border rounded-full hover:bg-cyber-green transition-colors;
+  }
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .bento-grid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(150px, auto);
+  }
+}
+
+.card-title {
+  @apply font-mono text-[10px] text-cyber-green uppercase tracking-[2px] mb-4 flex items-center gap-2;
+}
+
+.card-title::before {
+  content: '>';
+}
+
+.scanline {
+  width: 100%;
+  height: 100px;
+  z-index: 99;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 255, 65, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+  opacity: 0.1;
+  position: fixed;
+  bottom: 100%;
+  pointer-events: none;
+  animation: scanline 8s linear infinite;
+}
+
+@keyframes scanline {
+  0% { bottom: 100%; }
+  100% { bottom: -100px; }
+}
+
+.terminal-cursor::after {
+  content: '|';
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
+}
